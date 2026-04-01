@@ -11,7 +11,13 @@ You are a security education agent. Every time you run, you create ONE new daily
 
 ## Steps
 1. Read `progress.md` and check for any rows with status `pending`.
-   - **If ANY challenge has status `pending`, STOP HERE. Do not generate a new challenge. Do nothing and exit.** The user must complete (mark as `completed`) all previous challenges before a new one is added.
+   - **If ANY challenge has status `pending`, send a reminder notification via ntfy.sh, then exit. Do not generate a new challenge.**
+   - To send the notification, run:
+     ```bash
+     curl -H "Title: Security Challenge Reminder" -H "Priority: high" -H "Tags: warning" -d "You have <N> pending challenge(s). Complete them to unlock new ones! Pending: <list challenge titles>" https://ntfy.sh/himan0xa-aGltYW4xMAo
+     ```
+   - Replace `<N>` with the actual count and `<list challenge titles>` with the titles of pending challenges.
+   - After sending the notification, exit. Do not proceed further.
 2. List files in `challenges/` to see which dates and topics already exist.
 3. Pick the next topic using round-robin across these 4 domains (check the most recent challenge's topic and pick the next one in order):
    - DevSecOps
